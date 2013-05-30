@@ -30,8 +30,15 @@
         <section id="main-content">
           <h1>Selendroid</h1>
 
-<p>Selendroid is an attempt to implement the Selenium JSON Wire Protocol for Android native and hybrid apps.</p>
+
+<p>Selendroid is a test automation framework which drives of the UI of Android native and hybrid applications (apps). Tests are written using the Selenium 2 client API.</p>
+<p>Selendroid can be used on emulators and real devices and can be integrated as a node into the Selenium Grid for scaling and parallel testing. </p>
+
+
 <p><iframe width="640" height="480" src="http://www.youtube.com/embed/UYl8r9br5cM?rel=0" frameborder="0" allowfullscreen></iframe></p>
+
+<h2>Latest News</h2>
+<p>Selendroid Version 0.3 is released (<a href="https://github.com/DominikDary/selendroid/blob/master/changelog.md">List of Features</a>)</p>
 
 <h2>Getting started</h2>
 
@@ -40,23 +47,12 @@ Selendroid-server in combination with the application under test (aut) must be i
 
 <p>To write and run tests with selendroid, first a customized selendroid-server for your aut must be created. To simplify this process I have created a Ruby gem:</p>
 
-<pre><code>    sudo gem install selendroid
-    selendroid build pathToYour.apk
+<pre><code>    
+    sudo gem install selendroid
+    selendroid build-and-start pathToYour.apk
 </code></pre>
 
-<p>Now you will find your customized selendroid-server. </p>
-
-<pre><code>    # install the customized selendroid-server on the device
-    adb install selendroid-server-0.X.X.apk
-</code></pre>
-	
-<p>To run the server:</p>
-
-<pre><code>    # start the selendroid server: 
-    adb shell am instrument -e main_activity 'org.openqa.selendroid.testapp.HomeScreenActivity' org.openqa.selendroid.server/org.openqa.selendroid.server.ServerInstrumentation
-    # activate port forwarding.
-    adb forward tcp:8080 tcp:8080
-</code></pre>
+<h2>Run your Tests</h2>
 
 <p>A sample test looks like:</p>
 
@@ -75,12 +71,6 @@ Selendroid-server in combination with the application under test (aut) must be i
 </code></pre>
 
 <p>More details about selendroid can be found in the <a href="https://github.com/DominikDary/selendroid/wiki/">wiki</a>.</p>
-
-<h2>Current state</h2>
-
-<p>Please keep in mind that this project is in very early stages. Help is appreciated. Reach us out in the issues or via email.</p>
-
-<p>You can track the current progress on the following <a href="https://github.com/DominikDary/selendroid/wiki/JSON-Wire-Protocol">link</a></p>
         </section>
 
         <aside id="sidebar">
