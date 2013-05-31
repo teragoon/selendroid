@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+   <link href="stylesheets/prettify.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="javascripts/prettify.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/properties.js"></script>
+
+    <title>Selendroid</title>
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-1537443-9']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+
+	<script type="text/javascript">
+	$(document).ready(function($){
+	    buildMenu("setup");
+	    });
+	    </script>
+  </head>
+
+<body onload="prettyPrint()">
+    <header>
+      <div class="inner">
+        <h1>Selendroid</h1>
+        <h2>&quot;Selenium for Android Apps&quot; <br/>(Test automate native or hybrid Android apps with Selendroid.)</h2>
+        <a href="https://github.com/DominikDary/selendroid" class="button"><small>View project on</small>GitHub</a>
+      <div id="menu"/>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+<h1>Setup</h1>
+Selendroid is based on the Android instrumentation framework, so therefor only testing one specific app is supported.
+
+Like Selenium we offer as well a standalone server.
+
+Please follow this steps to setup your machine:
+
+<ol>
+<li>Install Java and configure JAVA_HOME</li>
+<li>Install latest <a href="http://developer.android.com/sdk/index.html">Android-Sdk</a> and configure ANDROID_HOME</li>
+<li>Create the emulators that you want to use</li>
+<li>Download <a href="https://s3-us-west-1.amazonaws.com/selendroid/selendroid-standalone-0.4-SNAPSHOT-standalone.jar">Selendroid standalone</a></li>
+<li>start the selendroid server:
+	<ul>
+	    <li>`java -jar selendroid-standalone-0.4-standalone.jar -app selendroid-test-app-0.4.apk`</li>
+	</ul>
+</li>	
+</ol>
+   
+Selendroid-standalone is able to start already existing Android emulators during the test session.
+
+<h2>Run your Tests</h2>
+
+<p>A sample test looks like:</p>
+
+<pre><code>SelendroidCapabilities capa =
+    SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID16, "io.selendroid.testapp:0.4");
+
+WebDriver driver = new SelendroidDriver("http://localhost:5555/wd/hub", capa);
+WebElement inputField = driver.findElement(By.id("my_text_field"));
+Assert.assertEquals("true", inputField.getAttribute("enabled"));
+inputField.sendKeys("Selendroid");
+Assert.assertEquals("Selendroid", inputField.getText());
+driver.quit();
+</code></pre>
+ </section>
+
+        <aside id="sidebar"><div id="footer_wrap" class="outer" /></aside>
+      </div>
+    </div>
+  </body>
+</html>
