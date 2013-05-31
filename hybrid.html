@@ -1,56 +1,249 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-   <link href="stylesheets/prettify.css" type="text/css" rel="stylesheet"/>
+    <link href="stylesheets/prettify.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="javascripts/prettify.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="javascripts/properties.js"></script>
 
-    <title>Selendroid</title>
-	<script type="text/javascript">
+    <title>Selendroid hybrid apps support</title>
+    <script type="text/javascript">
 
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-1537443-9']);
-	  _gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1537443-9']);
+        _gaq.push(['_trackPageview']);
 
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
 
-	</script>
+    </script>
 
-	<script type="text/javascript">
-	$(document).ready(function($){
-	    buildMenu("hybrid");
-	    });
-	    </script>
-  </head>
+    <script type="text/javascript">
+        $(document).ready(function ($) {
+            buildMenu("hybrid");
+        });
+    </script>
+</head>
 
 <body onload="prettyPrint()">
-    <header>
-      <div class="inner">
+<header>
+    <div class="inner">
         <h1>Selendroid</h1>
-        <h2>&quot;Selenium for Android Apps&quot; <br/>(Test automate native or hybrid Android apps with Selendroid.)</h2>
-        <a href="https://github.com/DominikDary/selendroid" class="button"><small>View project on</small>GitHub</a>
-      <div id="menu"/>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>Native</h1>
+        <h2>&quot;Selenium for Android Apps&quot; <br/>(Test automate native or hybrid Android apps with Selendroid.)
+        </h2>
+        <a href="https://github.com/DominikDary/selendroid" class="button">
+            <small>View project on</small>
+            GitHub</a>
 
-t.b.d
- </section>
-
-        <aside id="sidebar"><div id="footer_wrap" class="outer" /></aside>
-      </div>
+        <div id="menu"/>
     </div>
-  </body>
+</header>
+
+<div id="content-wrapper">
+    <div class="inner clearfix">
+        <section id="main-content">
+            <h1>Hybrid/Web Elements</h1>
+
+            <p>To switch to the <b>web view</b> mode:</p>
+
+            <p>Ruby:
+            <pre>driver.switch_to.window('WEBVIEW')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.switchTo().window("WEBVIEW");</pre>
+            </p>
+
+            <h2>Supported Element Locators</h2>
+
+            <table>
+                <tr>
+                    <th>Locator</th><th>Description</th>
+                </tr>
+                <tr>
+                    <td>Id</td><td>Finds the element by Id.</td>
+                </tr>
+                <tr>
+                    <td>name</td><td>Find the element by name.</td>
+                </tr>
+                <tr>
+                    <td>link text</td><td>Find the element by text.</td>
+                </tr>
+                <tr>
+                    <td>partial link text</td><td>Find the element by partial text.</td>
+                </tr>
+                <tr>
+                    <td>class</td><td>Find the element by class.</td>
+                </tr>
+                <tr>
+                <td>tag name</td><td>Find the element by tag name.</td>
+            </tr>
+                <tr>
+                    <td>css</td><td>Find the element by css locator.</td>
+                </tr>
+                <tr>
+                    <td>xpath</td><td>Find the element by xpath.</td>
+                </tr>
+            </table>
+            <h3>Web locator examples</h3>
+            <p>If you have a sample (<a href="http://www.ibm.com/developerworks/library/wa-selenium2/index.html">Source</a> ) web page with the html source code like this, the locators can be used in the following way:</p>
+            <pre><code>
+<html>
+<head>
+    ...
+</head>
+<body class="logged_out env-production">
+<div id="main">
+    <div id="header" class="true">
+        ...
+        <div class="topsearch">
+            <ul class="nav logged_out">
+                <li class="pricing">
+                    <a href="https://github.com/plans">Signup and Pricing</a>
+                </li>
+                <li class="explore">
+                    <a href="https://github.com/explore">Explore GitHub</a>
+                </li>
+                <li class="features">
+                    <a href="https://github.com/features">Features</a>
+                </li>
+                <li class="blog">
+                    <a href="https://github.com/blog">Blog</a>
+                </li>
+                <li class="login">
+                    <a href="https://github.com/login">Login</a>
+                </li>
+            </ul>
+        </div>
+        ...
+    </div>
+    ...
+</div>
+...
+</body>
+</html>
+            </code> </pre>
+            <p></p>
+
+            <h2>Id</h2>
+            <p>Means the id that is described in the layout xml file of the corresponding activity.
+            <p>Ruby:
+            <pre>driver.find_element(:id,'buttonTest')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.id("buttonTest"));</pre>
+            </p>
+            </p>
+
+
+            <h2>Name</h2>
+            <p>Is mapped to the accessibility label (content description) of the view element.
+            <p>Ruby:
+            <pre>driver.find_element(:name,'buttonTestCD')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.name("buttonTestCD"));</pre>
+            </p>
+            </p>
+
+            <h2>Link text</h2>
+            <p>Mapped to the displayed text of the element.
+            <p>Ruby:
+            <pre>driver.find_element(:link_text,'EN Button')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.linkText("EN Button"));</pre>
+            </p>
+            </p>
+
+            <h2>Partial Link Text</h2>
+            <p>Mapped to the displayed text of the element.
+            <p>Ruby:
+            <pre>driver.find_element(:partial_link_text,'EN Butto')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.partialLinkText("EN Butto"));</pre>
+            </p>
+            </p>
+
+            <h2>Class</h2>
+            <p>Mapped to the ui element class of the view.
+            <p>Ruby:
+            <pre>driver.find_element(:class_name,'android.widget.Button')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.className("android.widget.Button"));</pre>
+            </p>
+            </p>
+
+            <h2>tag name</h2>
+            <p>Mapped to the simple name of the ui element class of the view.
+            <p>Ruby:
+            <pre>driver.find_element(:tag_name,'Button')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.tagName("Button"));</pre>
+            </p>
+            </p>
+
+            <h2>css</h2>
+            <p>Mapped to the simple name of the ui element class of the view.
+            <p>Ruby:
+            <pre>driver.find_element(:tag_name,'Button')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.tagName("Button"));</pre>
+            </p>
+            </p>
+
+            <h2>xpath</h2>
+            <p>Mapped to the simple name of the ui element class of the view.
+            <p>Ruby:
+            <pre>driver.find_element(:tag_name,'Button')</pre>
+            </p>
+
+            <p>Java:
+            <pre>driver.findElement(By.tagName("Button"));</pre>
+            </p>
+            </p>
+
+            <h2>Supported Element Interactions</h2>
+            <ol>
+                <li>Get Text</li>
+                <li>Click</li>
+                <li>Send Keys</li><li>Get Attribute of Element</li>
+                <li>Clear</li>
+                <li>Submit</li>
+                <li>Is Selected</li>
+                <li>Is Displayed</li>
+                <li>Is Enabled</li>
+                <li>Get Size</li>
+                <li>Get Location</li>
+            </ol>
+        </section>
+        </section>
+
+        <aside id="sidebar">
+            <div id="footer_wrap" class="outer"/>
+        </aside>
+    </div>
+</div>
+</body>
 </html>
