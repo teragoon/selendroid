@@ -71,7 +71,7 @@
                     standalone</a></li>
                 <li>start the selendroid server:
                     <ul>
-                        <li><em>java -jar selendroid-standalone-0.4-standalone.jar -app selendroid-test-app-0.4.apk</em></li>
+                        <li><em>java -jar selendroid-standalone-0.4-standalone.jar -app <a href="https://s3-us-west-1.amazonaws.com/selendroid/selendroid-test-app-0.4-SNAPSHOT.apk">selendroid-test-app-0.4.apk</a></em></li>
                     </ul>
                 </li>
             </ol>
@@ -83,7 +83,9 @@
             <p>A sample test looks like:</p>
 
 <pre><code>SelendroidCapabilities capa =
-    SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID16, "io.selendroid.testapp:0.4");
+    SelendroidCapabilities.emulator(
+         DeviceTargetPlatform.ANDROID16,
+                "io.selendroid.testapp:0.4");
 
 WebDriver driver = new SelendroidDriver("http://localhost:5555/wd/hub", capa);
 WebElement inputField = driver.findElement(By.id("my_text_field"));
@@ -95,6 +97,7 @@ driver.quit();
         </section>
 
         <aside id="sidebar">
+            <a id="download_me" href="#" class="button">Download</a>
             <div id="footer_wrap" class="outer"/>
         </aside>
     </div>

@@ -27,8 +27,7 @@ $(document).ready(function ($) {
 });
 
 buildFooter = function () {
-    $("#footer_wrap").html('<a href="DEFAULT" id="download_me" class="button"></a><footer class="inner">' +
-        '<a href="https://github.com/DominikDary/selendroid"></a>' +
+    $("#footer_wrap").html('<a href="https://github.com/DominikDary/selendroid"></a>' +
         'is maintained by <a href="https://github.com/DominikDary/selendroid/blob/master/AUTHORS">Selendroid authors</a>.' +
         '<p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>');
 };
@@ -39,10 +38,11 @@ buildMenu = function (page) {
         '<li><a href="setup.html" id="setup">Setup</a></li>' +
         '<li><a href="native.html" id="native">Native</a></li>' +
         '<li><a href="hybrid.html" id="hybrid">Hybrid</a></li>' +
-        '<li><a href="gestures.html" id="bug">Gestures</a></li>' +
+        '<li><a href="gestures.html" id="gestures">Gestures</a></li>' +
         '<li><a href="inspector.html" id="inspector">Inspector</a></li>' +
         '<li><a href="scale.html" id="scale">Scale</a></li>' +
         '<li><a href="faq.html" id="faq">FAQ</a></li>' +
+        '<li><a href="architecture.html" id="architecture">Architecture</a></li>' +
         '</ul>');
     $("#" + page).parent().addClass("active");
 };
