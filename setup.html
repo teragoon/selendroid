@@ -51,8 +51,19 @@
 
 <div id="content-wrapper">
     <div class="inner clearfix">
+
+
+
         <section id="main-content">
-            <h1>Setup</h1>
+            <div class="nav-container">
+            <div class = "nav">
+                <ul >
+                    <li><a href="#firstTest">First Test</a></li>
+                    <li><a href="#androidDevices">Android Devices</a></li>
+                </ul>
+            </div>
+            </div><br>
+                    <h1>Setup</h1>
             Selendroid is based on the Android instrumentation framework, so therefor only testing one specific app is
             supported.
 
@@ -78,7 +89,7 @@
 
             Selendroid-standalone is able to start already existing Android emulators during the test session.
 
-            <h2>Run your Tests</h2>
+            <h2 id="firstTest">First Tests</h2>
 
             <p>A sample test looks like:</p>
 
@@ -94,6 +105,32 @@ inputField.sendKeys("Selendroid");
 Assert.assertEquals("Selendroid", inputField.getText());
 driver.quit();
 </code></pre>
+           <h2 id="androidDevices">Devices</h2>
+            <p>Selendroid supports testing on Hardware devices as well as using Android emulators. </p>
+            <h3>
+                Using Emulators
+            </h3>
+            <p>Selendroid is only able to start and stop Android Virtual Devices (Avd) that already exist. After an emulator has been created, it is recommended to do the first start manually to verify everything works fine. When creating avds please read the following configuration recommondations:</p>
+            <ul>
+                <li>Use whenever possible the Intel x86 ABI</li>
+                <li>
+                    Install
+                    <a href="http://software.intel.com/en-us/articles/installation-instructions-for-intel-hardware-accelerated-execution-manager-microsoft">Intel x86 Emulator Accelerator</a>
+                    on Mac and Windows and use KVM on Linux to enable hardware acceleration to massivly speed up the Emulator
+                </li>
+                <li>Use at least 1024MB of RAM per emulator</li>
+                <li>Use at least 32MB of VM Heap per emulator</li>
+                <li>Use the Host GPU. If after the first start of the emulator only a black screen is displayed, please deactivate this option.</li>
+                <li>The number of emulators you can in parallel per machine depends heavily on the hardware of the machine you use.</li>
+            </ul>
+            <h3>
+                Using Hardware Devices
+            </h3>
+            <ul>
+                <li>Please make sure the device has no screen lock configured.</li>
+                <li>Devices must be plugged in via USB to the computer selendroid-standalone component is running on.</li>
+            </ul>
+
         </section>
 
         <aside id="sidebar">

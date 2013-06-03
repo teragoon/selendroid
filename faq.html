@@ -39,7 +39,8 @@
     <div class="inner">
         <h1>Selendroid</h1>
 
-        <h2>&quot;Selenium for Android Apps&quot; <br/>(Test automate native or hybrid Android apps with Selendroid.)</h2>
+        <h2>&quot;Selenium for Android Apps&quot; <br/>(Test automate native or hybrid Android apps with Selendroid.)
+        </h2>
         <a href="https://github.com/DominikDary/selendroid" class="button">
             <small>View project on</small>
             GitHub</a>
@@ -51,40 +52,76 @@
 <div id="content-wrapper">
     <div class="inner clearfix">
         <section id="main-content">
+            <ul>
+                <li>
+                    <a href="#q-does-selendroid-require-to-modify-your-app">Does selendroid require to modify your
+                        app?</a>
+                </li>
+                <li>
+                    <a href="#q-can-only-the-app-itself-be-automated">Can only the app itself be automated?</a>
+                </li>
+                <li>
+                    <a href="#q-can-selendroid-automate-hybrid-apps-web-views">Can selendroid automate hybrid apps (web
+                        views)?</a>
+                </li>
+                <li>
+                    <a href="#q-does-selendroid-creates-and-starts-automatically-emulators-for-you">Does selendroid
+                        creates and starts automatically emulators for you?</a>
+                </li>
+                <li>
+                    <a href="#q-how-do-you-test-that-actually-selendroid-works-fine">How do you test that actually
+                        selendroid works fine?</a>
+                </li>
+                <li>
+                    <a href="#q-how-can-i-chat-with-the-developers">How can I chat with the developers?</a>
+                </li>
+                <li>
+                    <a href="#q-how-can-i-get-the-html-source-of-the-webview">How can I get the HTML source of the
+                        webview?</a>
+                </li>
+                <li>
+                    <a href="#q-what-is-the-architecture-of-selenium">What is the architecture of Selenium</a>
+                </li>
+            </ul>
             <h1>Frequently Asked Questions</h1>
 
-            <h3>Q: Does selendroid require to modify your app?</h3>
+            <h3 id="q-does-selendroid-require-to-modify-your-app">Q: Does selendroid require to modify your app?</h3>
 
             <p>A: No, the app that you would like to automate must not be modified.</p>
 
-            <h3>Q: Can only the app itself be automated?</h3>
+            <h3 id="#q-can-only-the-app-itself-be-automated">Q: Can only the app itself be automated?</h3>
 
             <p>A: Yes, only the app itself can be automated becasue selendroid depends on the Android instrumentation
                 framework.</p>
 
-            <h3>Q: Can selendroid automate hybrid apps (web views)?</h3>
+            <h3 id="#q-can-selendroid-automate-hybrid-apps-web-views">Q: Can selendroid automate hybrid apps (web
+                views)?</h3>
 
             <p>A: Yes, selendroid can automate native and hybrid apps.</p>
 
-            <h3>Q: Does selendroid creates and starts automatically emulators for you?</h3>
+            <h3 id="q-does-selendroid-creates-and-starts-automatically-emulators-for-you">Q: Does selendroid creates and
+                starts automatically emulators for you?</h3>
 
-            <p>A: No, selendroid is not starting or creating emulators.</p>
+            <p>A: Yes, when using you use selendroid-standalone then existing emulators are started automatically
+                if the desired capabilities are matching to one of the existing Emulators.</p>
 
-            <h3>Q: How do you test that actually selendroid works fine?</h3>
+            <h3 id="#q-how-do-you-test-that-actually-selendroid-works-fine">Q: How do you test that actually selendroid
+                works fine?</h3>
 
             <p>A: We are maintaining a special test app with a bunch of automated tests. Those tests are executed before
                 we release and also everytime a commit is done. We use as a continuous integration server Travis-ci.</p>
 
-            <h3>Q: How can I chat with the developers?</h3>
+            <h3 id="#q-how-can-i-chat-with-the-developers">Q: How can I chat with the developers?</h3>
 
             <p>A: Come and join us on IRC: #selendroid on freenode.net</p>
 
-            <h3>Q: How can I get the HTML source of the webview?</h3>
+            <h3 id="#q-how-can-i-get-the-html-source-of-the-webview">Q: How can I get the HTML source of the
+                webview?</h3>
 
             <p>A: Selendroid's inspector is not able to display the HTML source of the webview. You can use selendroid's
                 build in mechanism to get the page source. Details are described <a href="inspector.html">here</a>.</p>
 
-            <h3>Q: What is the architecture of Selenium?</h3>
+            <h3 id="#q-what-is-the-architecture-of-selenium">Q: What is the architecture of Selenium?</h3>
 
             <p>A: A very good article about all the architecture details of the selenium project can be found <a
                     href="http://www.aosabook.org/en/selenium.html">here</a>.</p>
@@ -92,6 +129,7 @@
 
         <aside id="sidebar">
             <a id="download_me" href="#" class="button">Download</a>
+
             <div id="footer_wrap" class="outer"/>
         </aside>
     </div>
