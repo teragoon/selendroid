@@ -9,7 +9,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="javascripts/properties.js"></script>
 
-    <title>Mobile-Gestures</title>
+    <title>Mobile Gestures</title>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -55,7 +55,20 @@
             <h1>Mobile Gestures</h1>
             <p>Selendroid is implementing the <a href="http://code.google.com/p/selenium/wiki/AdvancedUserInteractions">Advanced User Interactions API</a>. This is a new, more comprehensive API for describing actions a user can perform on a web page.
                 This includes actions such as drag and drop or clicking multiple elements while holding down the Control key.</p>
+            <h2>Examples</h2>
+            <h3>How to swipe from right to left</h3>
+            <p>Ruby:
+            <pre><code>#Please include the touch screen:
+#include Selenium::WebDriver::DriverExtensions::HasTouchScreen
+pages = driver.find_element(:id,'vp_pages')
+driver.touch.flick(pages,-100,0,:normal).perform</code></pre>
+            </p>
 
+            <p>Java:
+            <pre><code>WebElement pages = driver.findElement(By.id("vp_pages"));
+TouchActions flick = new TouchActions(driver).flick(pages, -100, 0, 0);
+flick.perform();</code></pre>
+            </p>
         </section>
 
         <aside id="sidebar">
