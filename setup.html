@@ -9,7 +9,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="javascripts/properties.js"></script>
 
-    <title>Selendroid</title>
+    <title>Setting up Selendroid</title>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -71,7 +71,7 @@
                     standalone</a></li>
                 <li>start the selendroid server:
                     <ul>
-                        <li>`java -jar selendroid-standalone-0.4-standalone.jar -app selendroid-test-app-0.4.apk`</li>
+                        <li><em>java -jar selendroid-standalone-0.4-standalone.jar -app selendroid-test-app-0.4.apk</em></li>
                     </ul>
                 </li>
             </ol>
@@ -85,12 +85,12 @@
 <pre><code>SelendroidCapabilities capa =
     SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID16, "io.selendroid.testapp:0.4");
 
-    WebDriver driver = new SelendroidDriver("http://localhost:5555/wd/hub", capa);
-    WebElement inputField = driver.findElement(By.id("my_text_field"));
-    Assert.assertEquals("true", inputField.getAttribute("enabled"));
-    inputField.sendKeys("Selendroid");
-    Assert.assertEquals("Selendroid", inputField.getText());
-    driver.quit();
+WebDriver driver = new SelendroidDriver("http://localhost:5555/wd/hub", capa);
+WebElement inputField = driver.findElement(By.id("my_text_field"));
+Assert.assertEquals("true", inputField.getAttribute("enabled"));
+inputField.sendKeys("Selendroid");
+Assert.assertEquals("Selendroid", inputField.getText());
+driver.quit();
 </code></pre>
         </section>
 

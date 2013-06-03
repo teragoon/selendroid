@@ -9,7 +9,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="javascripts/properties.js"></script>
 
-    <title>Selendroid hybrid apps support</title>
+    <title>Testing hybrid apps with Selendroid</title>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -57,11 +57,11 @@
             <p>To switch to the <b>web view</b> mode:</p>
 
             <p>Ruby:
-            <pre>driver.switch_to.window('WEBVIEW')</pre>
+            <pre><code>driver.switch_to.window('WEBVIEW')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.switchTo().window("WEBVIEW");</pre>
+            <pre><code>driver.switchTo().window("WEBVIEW");</code></pre>
             </p>
 
             <h2>Supported Element Locators</h2>
@@ -97,52 +97,50 @@
             </table>
             <h3>Web locator examples</h3>
             <p>If you have a sample (<a href="http://www.ibm.com/developerworks/library/wa-selenium2/index.html">Source</a> ) web page with the html source code like this, the locators can be used in the following way:</p>
-            <pre><code>
-<html>
-<head>
+<pre><code>&lt;html&gt;
+&lt;head&gt;
     ...
-</head>
-<body class="logged_out env-production">
-<div id="main">
-    <div id="header" class="true">
+&lt;/head&gt;
+&lt;body class=&quot;logged_out env-production&quot;&gt;
+&lt;div id=&quot;main&quot;&gt;
+    &lt;div id=&quot;header&quot; class=&quot;true&quot;&gt;
         ...
-        <div class="topsearch">
-            <ul class="nav logged_out">
-                <li class="pricing">
-                    <a href="https://github.com/plans">Signup and Pricing</a>
-                </li>
-                <li class="explore">
-                    <a href="https://github.com/explore">Explore GitHub</a>
-                </li>
-                <li class="features">
-                    <a href="https://github.com/features">Features</a>
-                </li>
-                <li class="blog">
-                    <a href="https://github.com/blog">Blog</a>
-                </li>
-                <li class="login">
-                    <a href="https://github.com/login">Login</a>
-                </li>
-            </ul>
-        </div>
+        &lt;div class=&quot;topsearch&quot;&gt;
+            &lt;ul class=&quot;nav logged_out&quot;&gt;
+                &lt;li class=&quot;pricing&quot;&gt;
+                    &lt;a href=&quot;https://github.com/plans&quot;&gt;Signup and Pricing&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;explore&quot;&gt;
+                    &lt;a href=&quot;https://github.com/explore&quot;&gt;Explore GitHub&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;features&quot;&gt;
+                    &lt;a href=&quot;https://github.com/features&quot;&gt;Features&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;blog&quot;&gt;
+                    &lt;a href=&quot;https://github.com/blog&quot;&gt;Blog&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class=&quot;login&quot;&gt;
+                    &lt;a href=&quot;https://github.com/login&quot;&gt;Login&lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
         ...
-    </div>
+    &lt;/div&gt;
     ...
-</div>
+&lt;/div&gt;
 ...
-</body>
-</html>
-            </code> </pre>
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
             <p></p>
 
             <h2>Id</h2>
             <p>Means the id that is described in the layout xml file of the corresponding activity.
             <p>Ruby:
-            <pre>driver.find_element(:id,'buttonTest')</pre>
+            <pre><code>driver.find_element(:id,'header')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.id("buttonTest"));</pre>
+            <pre><code>driver.findElement(By.id("header"));</code></pre>
             </p>
             </p>
 
@@ -150,77 +148,75 @@
             <h2>Name</h2>
             <p>Is mapped to the accessibility label (content description) of the view element.
             <p>Ruby:
-            <pre>driver.find_element(:name,'buttonTestCD')</pre>
+            <pre><code>driver.find_element(:name,'name')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.name("buttonTestCD"));</pre>
+            <pre><code>driver.findElement(By.name("name"));</code></pre>
             </p>
             </p>
 
             <h2>Link text</h2>
             <p>Mapped to the displayed text of the element.
             <p>Ruby:
-            <pre>driver.find_element(:link_text,'EN Button')</pre>
+            <pre><code>driver.find_element(:link_text,'Blog')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.linkText("EN Button"));</pre>
+            <pre><code>driver.findElement(By.linkText("Blog"));</code></pre>
             </p>
             </p>
 
             <h2>Partial Link Text</h2>
             <p>Mapped to the displayed text of the element.
             <p>Ruby:
-            <pre>driver.find_element(:partial_link_text,'EN Butto')</pre>
+            <pre><code>driver.find_element(:partial_link_text,'Blo')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.partialLinkText("EN Butto"));</pre>
+            <pre><code>driver.findElement(By.partialLinkText("Blo"));</code></pre>
             </p>
             </p>
 
             <h2>Class</h2>
             <p>Mapped to the ui element class of the view.
             <p>Ruby:
-            <pre>driver.find_element(:class_name,'android.widget.Button')</pre>
+            <pre><code>driver.find_element(:class_name,'login')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.className("android.widget.Button"));</pre>
+            <pre><code>driver.findElement(By.className("login"));</code></pre>
             </p>
             </p>
 
             <h2>tag name</h2>
             <p>Mapped to the simple name of the ui element class of the view.
             <p>Ruby:
-            <pre>driver.find_element(:tag_name,'Button')</pre>
+            <pre><code>driver.find_element(:tag_name,'a')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.tagName("Button"));</pre>
+            <pre><code>driver.findElement(By.tagName("a"));</code></pre>
             </p>
             </p>
 
             <h2>css</h2>
-            <p>Mapped to the simple name of the ui element class of the view.
             <p>Ruby:
-            <pre>driver.find_element(:tag_name,'Button')</pre>
+            <pre><code>driver.find_element(:css,'ul.nav li')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.tagName("Button"));</pre>
+            <pre><code>driver.findElement(By.cssSelector("ul.nav li"));</code></pre>
             </p>
             </p>
 
             <h2>xpath</h2>
-            <p>Mapped to the simple name of the ui element class of the view.
             <p>Ruby:
-            <pre>driver.find_element(:tag_name,'Button')</pre>
+            <pre><code>driver.find_element(:xpath,'//a[@title='logo']')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.tagName("Button"));</pre>
+            <pre><code>driver.findElement(By.xpath("//a[@title='logo']")); </code></pre>
             </p>
             </p>
 

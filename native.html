@@ -9,7 +9,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="javascripts/properties.js"></script>
 
-    <title>Selendroid</title>
+    <title>Testing native apps with Selendroid</title>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -57,11 +57,11 @@
             <p>To switch to the <b>native</b> mode:</p>
 
             <p>Ruby:
-            <pre>driver.switch_to.window('NATIVE_APP')</pre>
+            <pre><code>driver.switch_to.window('NATIVE_APP')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.switchTo().window("NATIVE_APP");</pre>
+            <pre><code>driver.switchTo().window("NATIVE_APP");</code></pre>
             </p>
 
             <p>When a selendroid test session is started, by default the native mode is activated.</p>
@@ -97,11 +97,11 @@
             <h2>Id</h2>
             <p>Means the id that is described in the layout xml file of the corresponding activity.
             <p>Ruby:
-            <pre>driver.find_element(:id,'buttonTest')</pre>
+            <pre><code>driver.find_element(:id,'buttonTest')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.id("buttonTest"));</pre>
+            <pre><code>driver.findElement(By.id("buttonTest"));</code></pre>
             </p>
             </p>
 
@@ -109,55 +109,55 @@
             <h2>Name</h2>
             <p>Is mapped to the accessibility label (content description) of the view element.
             <p>Ruby:
-            <pre>driver.find_element(:name,'buttonTestCD')</pre>
+            <pre><code>driver.find_element(:name,'buttonTestCD')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.name("buttonTestCD"));</pre>
+            <pre><code>driver.findElement(By.name("buttonTestCD"));</code></pre>
             </p>
             </p>
 
             <h2>Link text</h2>
             <p>Mapped to the displayed text of the element.
             <p>Ruby:
-            <pre>driver.find_element(:link_text,'EN Button')</pre>
+            <pre><code>driver.find_element(:link_text,'EN Button')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.linkText("EN Button"));</pre>
+            <pre><code>driver.findElement(By.linkText("EN Button"));</code></pre>
             </p>
             </p>
 
             <h2>Partial Link Text</h2>
             <p>Mapped to the displayed text of the element.
             <p>Ruby:
-            <pre>driver.find_element(:partial_link_text,'EN Butto')</pre>
+            <pre><code>driver.find_element(:partial_link_text,'EN Butto')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.partialLinkText("EN Butto"));</pre>
+            <pre><code>driver.findElement(By.partialLinkText("EN Butto"));</code></pre>
             </p>
             </p>
 
             <h2>Class</h2>
             <p>Mapped to the ui element class of the view.
             <p>Ruby:
-            <pre>driver.find_element(:class_name,'android.widget.Button')</pre>
+            <pre><code>driver.find_element(:class_name,'android.widget.Button')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.className("android.widget.Button"));</pre>
+            <pre><code>driver.findElement(By.className("android.widget.Button"));</code></pre>
             </p>
             </p>
 
             <h2>tag name</h2>
             <p>Mapped to the simple name of the ui element class of the view.
             <p>Ruby:
-            <pre>driver.find_element(:tag_name,'Button')</pre>
+            <pre><code>driver.find_element(:tag_name,'Button')</code></pre>
             </p>
 
             <p>Java:
-            <pre>driver.findElement(By.tagName("Button"));</pre>
+            <pre><code>driver.findElement(By.tagName("Button"));</code></pre>
             </p>
             </p>
 

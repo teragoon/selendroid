@@ -39,10 +39,10 @@ buildMenu = function (page) {
         '<li><a href="setup.html" id="setup">Setup</a></li>' +
         '<li><a href="native.html" id="native">Native</a></li>' +
         '<li><a href="hybrid.html" id="hybrid">Hybrid</a></li>' +
+        '<li><a href="gestures.html" id="bug">Gestures</a></li>' +
         '<li><a href="inspector.html" id="inspector">Inspector</a></li>' +
         '<li><a href="scale.html" id="scale">Scale</a></li>' +
         '<li><a href="faq.html" id="faq">FAQ</a></li>' +
-        '<li><a href="bug.html" id="bug">Report a bug</a></li>' +
         '</ul>');
     $("#" + page).parent().addClass("active");
 };

@@ -110,6 +110,8 @@ a:hover {
     color: #2268b2;
 }
 
+td {text-align: left}
+
 header {
     padding-top: 40px;
     padding-bottom: 40px;

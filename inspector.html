@@ -71,14 +71,26 @@
             <p>The inspector currently does not support inspecting web views. For getting the html page source you can type
             in the selendroid shell:</p>
 
-            <pre><code>
-            driver.switch_to.window('WEBVIEW')
-            driver.page_source
-            </code></pre>
+<pre><code>driver.switch_to.window('WEBVIEW')
+driver.page_source</code></pre>
 
             <h3>Where do I get it?</h3>
-            <p>The web app is running on: http://localhost:8080/inspector</p>
+            <p>The web app is running on: <a href="http://localhost:8080/inspector">http://localhost:8080/inspector</a></p>
 
+
+            <h2>Selendroid Shell</h2>
+            <p>The selendroid gem has a build in Ruby shell:</p>
+            <pre><code>selendroid shell &lt;pathToYourAPK&gt;</code></pre>
+            <p><img src="images/selendroidShell.png"></p>
+            <h3>Using the shell</h3>
+            <p>By default the selndroid server and webdriver client are started automatically. If you would like to do it manually, just type</p>
+            <pre><code>start_selendroid_server(nil)</code></pre>
+            <p>or</p>
+            <pre><code>start_selendroid_client</code></pre>
+            <p>If you are in the shell and would like to get help, just type:</p>
+            <pre><code>helpme</code></pre>
+            <p>To start the selendroid inspector in your default browser, just type:</p>
+            <pre><code>inspector</code></pre>
         </section>
 
         <aside id="sidebar">
