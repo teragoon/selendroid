@@ -52,6 +52,16 @@
 <div id="content-wrapper">
     <div class="inner clearfix">
         <section id="main-content">
+        <div class="nav-container">
+            <div class="nav">
+                <ul>
+                    <li><a href="#findElements">Finding Elements</a></li>
+                    <li><a href="#elementInteractions">Interact with elements</a></li>
+                    <li><a href="#specialKeys">Special keys</a></li>
+                </ul>
+            </div>
+        </div>
+        <br>
             <h1>Native Elements</h1>
 
             <p>To switch to the <b>native</b> mode:</p>
@@ -90,7 +100,7 @@
                     <td>tag name</td><td>Find the element by tag name.</td>
                 </tr>
             </table>
-            <h3>Native locator examples</h3>
+            <h3 id="findElements">Native locator examples</h3>
             Sample app view hierarchy in the inspector:
 
             <img src="images/selendroidInspector.png">
@@ -161,7 +171,7 @@
             </p>
             </p>
 
-            <h2>Supported Element Interactions</h2>
+            <h2 id="elementInteractions">Supported Element Interactions</h2>
             <ol>
                 <li>Get Text</li>
                 <li>Click</li>
@@ -173,6 +183,92 @@
                 <li>Get Size</li>
                 <li>Get Location</li>
             </ol>
+            <h2 id="specialKeys">Interacting with the App using special keys</h2>
+
+            <p>Selendroid offers you to interact with the app using some special keys e.g. like the Android menu button.</p>
+
+            <p>Ruby:
+            <pre><code>driver.keyboard.send_keys("\uE102")</code></pre>
+            </p>
+
+            <p>Java:
+            <pre><code>((HasInputDevices) driver).getKeyboard().sendKeys(SelendroidKeys.MENU);</code></pre>
+            </p>
+            </p>
+
+
+<h3>Overview about available keys</h3>
+
+            <p>(The original list is documented in the interface: <a href="https://github.com/DominikDary/selendroid/blob/master/selendroid-client/src/main/java/org/openqa/selendroid/SelendroidKeys.java">SelendroidKeys</a>)</p>
+
+            <table>
+                <thead><tr>
+                    <th>Key</th>
+                    <th align="center">Unicode Character</th>
+                </tr></thead>
+                <tbody>
+                <tr>
+                    <td>ALT_LEFT</td>
+                    <td align="center">\uE00A</td>
+                </tr>
+                <tr>
+                    <td>DEL</td>
+                    <td align="center">\uE017</td>
+                </tr>
+                <tr>
+                    <td>DPAD_DOWN</td>
+                    <td align="center">\uE017</td>
+                </tr>
+                <tr>
+                    <td>DPAD_LEFT</td>
+                    <td align="center">\uE012</td>
+                </tr>
+                <tr>
+                    <td>DPAD_RIGHT</td>
+                    <td align="center">\uE014</td>
+                </tr>
+                <tr>
+                    <td>DPAD_UP</td>
+                    <td align="center">\uE013</td>
+                </tr>
+                <tr>
+                    <td>ENTER</td>
+                    <td align="center">\uE007</td>
+                </tr>
+                <tr>
+                    <td>SHIFT_LEFT</td>
+                    <td align="center">\uE008</td>
+                </tr>
+                <tr>
+                    <td>BACK</td>
+                    <td align="center">\uE100</td>
+                </tr>
+                <tr>
+                    <td>ANDROID_HOME</td>
+                    <td align="center">\uE101</td>
+                </tr>
+                <tr>
+                    <td>MENU</td>
+                    <td align="center">\uE102</td>
+                </tr>
+                <tr>
+                    <td>SEARCH</td>
+                    <td align="center">\uE103</td>
+                </tr>
+                <tr>
+                    <td>SYM</td>
+                    <td align="center">\uE104</td>
+                </tr>
+                <tr>
+                    <td>ALT_RIGHT</td>
+                    <td align="center">\uE105</td>
+                </tr>
+                <tr>
+                    <td>SHIFT_RIGHT</td>
+                    <td align="center">\uE106</td>
+                </tr>
+                </tbody>
+            </table>
         </section>
 
         <aside id="sidebar">
