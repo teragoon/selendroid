@@ -116,6 +116,44 @@
                 are
                 added to the device store as well.</p>
 
+            <p>You can check that the application and the devices are recognized by opening a browser and navigating to:
+                <a href="http://localhost:5555/wd/hub/status">http://localhost:5555/wd/hub/status</a>.</p>
+
+            <p>You should see a json object with all the info about the app.</p>
+<pre><code>{
+    status: 0,
+    value: {
+    "os": {
+        "name": "Android"
+    },
+    "build": {
+        "browserName": "selendroid",
+        "version": "dev"
+    },
+    "supportedApps": [{
+        "appId": "io.selendroid.testapp:0.4-SNAPSHOT",
+        "mainActivity": "io.selendroid.testapp.HomeScreenActivity",
+        "basePackage": "io.selendroid.testapp"
+    }],
+    "supportedDevices": [{
+        "screenSize": "320x480",
+        "targetPlatform": "ANDROID17",
+        "emulator": true,
+        "avdName": "latest"
+    }, {
+        "screenSize": "320x480",
+        "targetPlatform": "ANDROID16",
+        "emulator": true,
+        "avdName": "es"
+    }, {
+        "screenSize": "320x480",
+        "targetPlatform": "ANDROID10",
+        "emulator": true,
+        "avdName": "AVD_for_api10"
+    }]
+    }
+}</code></pre>
+
             <h3>Command line parameters</h3>
             <h4>-port</h4>
 
@@ -129,6 +167,7 @@
             <h4>-timeoutEmulatorStart</h4>
 
             <p>Specify the timeout in milliseconds to start emulators, the default is 120000.</p>
+
 
             <h2 id="firstTest">First Tests</h2>
 
