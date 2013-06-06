@@ -52,19 +52,129 @@
 <div id="content-wrapper">
     <div class="inner clearfix">
         <section id="main-content">
-            <h1>Selendroid's Architecture</h1>
-            <h2>Overview about the selendroid</h2>
-            <p>Selendroid is based on the Android instrumentation framework, so therefor only testing one app is supported.
-                Selendroid-server in combination with the application under test (aut) must be installed on the device in order
-                to be able to run automated end-to-end tests.</p>
-         <img src="https://docs.google.com/drawings/d/1Mo1YWUBgDNzcIBSq8EuyBjNhgpQk-3F91lEt9_43ueQ/pub?w=772&amp;h=298">
+            <div class="nav-container">
+                <div class="nav">
+                    <ul>
+                        <li><a href="#overview">Overview</a></li>
+                        <li><a href="#selendroidServer">Selendroid-Server</a></li>
+                        <li><a href="#selendroidStandalone">Selendroid-Standalone</a></li>
+                        <li><a href="#buildIt">Build it</a></li>
+                        <li><a href="#testIt">Test it</a></li>
+                        <li><a href="#buildIt">CI Setup</a></li>
+                        <li><a href="#testIt">Contribute your code</a></li>
+                    </ul>
+                </div>
+            </div>
+            <br>
 
-PLEASE NOTE THAT THIS SECTION WILL BE REWRITTEN SOON.
-    
-</section>
+            <h1>Selendroid's Architecture</h1>
+
+            <h2 id="overview">Overview about the selendroid</h2>
+
+            <p>Selendroid is based on the Android instrumentation framework, so therefor only testing one app is
+                supported.
+                Selendroid contains three major components:</p>
+            <ul>
+                <li><b>Selendroid-Client</b> - the java client library (based on the selenium java client).</li>
+                <li><b>Selendroid-Server</b> - that is running beside your app on the Android device.</li>
+                <li><b>Selendroid-Standalone</b> - manages different Android devices by installing the selendroid-server and
+                    the app under test.
+                </li>
+            </ul>
+            <p>Here you find an overview about the architecture:</p>
+            <img src="https://docs.google.com/drawings/d/1Mo1YWUBgDNzcIBSq8EuyBjNhgpQk-3F91lEt9_43ueQ/pub?w=772&amp;h=298">
+
+            <p>The <em>selendroid-standalone-X.X.X.jar</em> does contains the standalone-server, selendroid-server and
+                as well the selendroid-client driver.</p>
+
+            <p>The main component that is responsible for the app automation part is selendroid-server.</p>
+
+            <h2 id="selendroidServer">Selendroid-Server</h2>
+            <p>Central driver class is <code>DefaultSelendroidDriver</code>. That class is reponsible for doing the common activities
+            (like taking screenshots) for both contexts <code>NATIVE_APP</code> and <code>WEBVIEW</code>.</p>
+            <p>The web view related driver class is <code>SelendroidWebDriver</code> and native class is
+                <code>SelendroidNativeDriver</code>.</p>
+            <p><code>SelendroidWebDriver</code> is using <a href="http://code.google.com/p/selenium/wiki/AutomationAtoms">
+                Automation Atoms</a> of the selenium project to interact with the elements in the web view.</p>
+
+            <h2 id="selendroidStandalone">Selendroid-Standalone</h2>
+            <p>Central driver class is <code>SelendroidStandaloneDriver</code> that acts as a proxy between the selendroid-client
+            and the selendroid-server and starts e.g. an Android emulator, creates for the app under test a customized
+            selendroid-server and installs everything on the device. After the session is initialized on the device, following
+            request are directly forwarded to the server on the device and the response routed back to the client.</p>
+
+            <h2 id="buildIt">How to build selendroid</h2>
+
+            <p>For building Selendroid from scratch (only needed for commiters!) you have to follow the following steps:</p>
+
+<pre><code>git clone https://github.com/DominikDary/selendroid.git
+cd selendroid/selendroid-server
+mvn install -Dandroid.renameInstrumentationTargetPackage=io.selendroid.testapp</code></pre>
+
+            <p><strong>Important</strong>: You must replace <em>io.selendroid.testapp</em> with the <em>default package</em> of your app.</p>
+
+            <p>If you want to run the selendroid server:</p>
+
+<pre><code># install the selendroid server:
+adb install -r target/selendroid-server-0.X.apk
+# start the selendroid server:
+adb shell am instrument -e main_activity 'io.selendroid.testapp.HomeScreenActivity' io.selendroid/.ServerInstrumentation
+# replace 'io.selendroid.testapp.HomeScreenActivity' with your app's 'main activity'.
+# activate port forwarding.
+adb forward tcp:8080 tcp:8080</code></pre>
+
+            <p>If you see errors like this (while installing or running):</p>
+
+<pre><code>Failure [INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES]</code></pre>
+
+            <p>This means selendroid-server app and the app under tests have been signed with different certificates.
+                Selendroid server is by default signed with the debug certificate of the machine where it was build.
+                For re-signing the app under test you can use the <a href="http://www.troido.de/re-sign.jar">re-sign tool</a>,
+                which is available under the Apachae 2 Licence.</p>
+
+            <h2 id="testIt">Testing Selendroid itself</h2>
+            <p>To test selendroid there is a <a href="https://github.com/DominikDary/selendroid/tree/master/selendroid-test-app">special app</a> that we use to verify that everything is working as expected. The end-to-end tests for this application are called large tests are are located <a href="https://github.com/DominikDary/selendroid/tree/master/selendroid-test-app/src/test/java/io/selendroid">here</a>.</p>
+
+            <h3>The main tests for verifying selendroid are:</h3>
+            <ul>
+                <li>ElementFindingTest</li>
+                <li>ChildElementFindingTest</li>
+                <li>ElementInteractionTests</li>
+            </ul><p>Selendroid's native focused tests are located <a href="https://github.com/DominikDary/selendroid/tree/master/selendroid-test-app/src/test/java/io/selendroid/nativetests">here</a> where as the hybrid (web view) focused test are located <a href="https://github.com/DominikDary/selendroid/tree/master/selendroid-test-app/src/test/java/io/selendroid/webviewdrivertests">here</a>.</p>
+
+
+            <h3>Testing selendroid requires following steps:</h3>
+            <ul>
+                <li>clone the project</li>
+                <li>build it via <code>mvn clean install</code>
+                </li>
+                <li>install the server via <code>adb install -r selendroid-server/target/selendroid-server-0.X.apk</code>
+                </li>
+                <li>install the server via <code>adb install -r selendroid-test-app/target/selendroid-test-app-0.X.apk</code>
+                </li>
+                <li>start the server: <code>adb shell am instrument -e main_activity 'io.selendroid.testapp.HomeScreenActivity' io.selendroid/.ServerInstrumentation</code></li>
+                <li>Do the port forwarding: <code>adb forward tcp:8080 tcp:8080</li></code>
+                <li><code>cd selendroid-test-app</code></li>
+                <li><code>mvn clean install -DskipTests=false</code></li>
+                <li>drink a coffee and wait for the test results ;-)</li>
+            </ul>
+
+            <h2 id="ci">CI Infrastructure</h2>
+            <p>As of now we use <a href="https://travis-ci.org/DominikDary/selendroid">Travis-CI</a>
+                to build and test selendroid. The current configuration is done in the file
+                <a href="https://github.com/DominikDary/selendroid/blob/master/.travis.yml">.travis.yml</a>.</p>
+
+
+            <h2 id="contribute">Contributing code</h2>
+            <p>Please fork the project and create pull requests and then we will have there the discussion about merging
+                the contribution into the main project. Please make sure you are using the code formatter <a
+                        href="http://code.google.com/p/google-styleguide/">Google Styleguide</a>.</p>
+            <p>If you have questions to your contribution, you can come and join us on IRC: #selendroid on freenode.net</p>
+        </section>
 
         <aside id="sidebar">
             <a id="download_me" href="#" class="button">Download</a>
+
             <div id="footer_wrap" class="outer"/>
         </aside>
     </div>
