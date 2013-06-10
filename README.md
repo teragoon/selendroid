@@ -13,3 +13,13 @@ You want more details?
 
 Check out our [documentation](http://dominikdary.github.io/selendroid/).
 
+Windows7
+--------
+$JAVA_HOME = C:\Program Files\Java\jdk1.7.0_21
+
+Program Files <= ShellCommand Exec Error
+
+~/src/main/java/io/selendroid/android/JavaSdk.java
+  - return adbCommand.toString();
+  + return "\"" + adbCommand.toString() + "\"";
+
