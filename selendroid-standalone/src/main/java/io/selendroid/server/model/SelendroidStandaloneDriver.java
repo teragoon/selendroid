@@ -123,11 +123,12 @@ public class SelendroidStandaloneDriver implements ServerDetails {
 
   /* package */void initAndroidDevices() throws AndroidDeviceException {
     deviceStore = new DeviceStore();
-    try {
-      resetAdb();
-    } catch (ShellCommandException e) {
-      throw new AndroidDeviceException("An error occured while restarting adb.", e);
-    }
+    //not working in windows
+//    try {
+//      resetAdb();
+//    } catch (ShellCommandException e) {
+//      throw new AndroidDeviceException("An error occured while restarting adb.", e);
+//    }
     List<AndroidEmulator> emulators = DefaultAndroidEmulator.listAvailableAvds();
     deviceStore.addEmulators(emulators);
     List<AndroidDevice> devices = androidDeviceFinder.findConnectedDevices();

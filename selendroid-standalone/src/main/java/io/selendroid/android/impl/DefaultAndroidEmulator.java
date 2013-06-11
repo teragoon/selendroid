@@ -22,7 +22,14 @@ import io.selendroid.exceptions.SelendroidException;
 import io.selendroid.exceptions.ShellCommandException;
 import io.selendroid.io.ShellCommand;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -301,9 +308,38 @@ public class DefaultAndroidEmulator extends AbstractDevice implements AndroidEmu
 
     try {
       ShellCommand.exec(command);
+      stopOnTelnet();
     } catch (ShellCommandException e) {
       throw new AndroidDeviceException(e);
     }
+  }
+  
+  private void stopOnTelnet() {
+	  Socket soc;
+	  try {
+		  soc = new Socket("localhost", 5560);
+		  DataInputStream din=new DataInputStream(soc.getInputStream());
+		  BufferedReader br=new BufferedReader(new InputStreamReader(din));
+		  log.info("1 : " + br.readLine());
+		  log.info("2 : " + br.readLine());
+		  String Command = "kill";
+	      //Create object of Output Stream  to write on socket
+	      DataOutputStream dout = new DataOutputStream(soc.getOutputStream());
+	      // Object of Buffered Reader to read command from terminal
+	      dout.write(Command.getBytes("UTF-8"));//sends command to server
+	      dout.writeBytes("\n");
+	      log.info("3 : " + br.readLine());
+	      soc.close();  //close port
+	      din.close();
+	      dout.close(); //close output stream
+	      br.close();
+	  } catch (UnknownHostException e) {
+		  e.printStackTrace();
+		  log.info("UnknownHost" + e.getMessage());
+	  } catch (IOException e) {
+		  e.printStackTrace();
+		  log.info("IO" + e.getMessage());
+	  }    
   }
 
   @Override
