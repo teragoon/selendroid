@@ -22,4 +22,12 @@ Program Files <= ShellCommand Exec Error
 ~/src/main/java/io/selendroid/android/JavaSdk.java
   - return adbCommand.toString();
   + return "\"" + adbCommand.toString() + "\"";
+  
+In Windows emulator because it does not die and kill telnet command added.
+
+M ~/selendroid-standalone/src/main/java/io/selendroid/android/impl/DefaultAndroidEmulator.java
+
+resetAdb() not working in windows 
+
+M ~/selendroid-standalone/src/main/java/io/selendroid/server/model/SelendroidStandaloneDriver.java
 
