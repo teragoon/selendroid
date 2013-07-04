@@ -14,24 +14,23 @@
 package io.selendroid.support;
 
 import static io.selendroid.waiter.TestWaiter.waitFor;
+import io.selendroid.SelendroidCapabilities;
+import io.selendroid.SelendroidDriver;
+import io.selendroid.SelendroidLauncher;
+import io.selendroid.device.DeviceTargetPlatform;
+import io.selendroid.waiter.TestWaiter;
+import io.selendroid.waiter.WaitingConditions;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
-import io.selendroid.waiter.TestWaiter;
-import io.selendroid.waiter.WaitingConditions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.android.AndroidDriver;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,14 +40,15 @@ import org.testng.annotations.BeforeMethod;
 
 public class BaseAndroidTest {
   protected WebDriver driver = null;
+  protected SelendroidLauncher selendroidServerLauncher = null;
   final String pathSeparator = File.separator;
   public static final String NATIVE_APP = "NATIVE_APP";
   public static final String WEBVIEW = "WEBVIEW";
 
 
   @BeforeMethod(alwaysRun = true)
-  public void setup() throws MalformedURLException {
-    driver = new AndroidDriver(new URL("http://localhost:8080/wd/hub"), getDefaultCapabilities());
+  public void setup() throws Exception {
+    driver = new SelendroidDriver("http://localhost:8080/wd/hub", getDefaultCapabilities());
   }
 
   @AfterMethod(alwaysRun = true)
@@ -83,17 +83,12 @@ public class BaseAndroidTest {
   }
 
   protected DesiredCapabilities getDefaultCapabilities() {
-    DesiredCapabilities capa = DesiredCapabilities.android();
-    capa.setCapability("aut", "selendroid-test-app");
-    capa.setCapability("locale", "de_DE");
-    capa.setCapability("maxInstances", "1");
-    capa.setCapability("browserName", "selendroid");
-    return capa;
+    return SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID16,
+        "io.selendroid.testapp:0.4-SNAPSHOT");
   }
 
   protected void takeScreenShot(String message) throws Exception {
-    WebDriver augmentedDriver = new Augmenter().augment(driver);
-    File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+    File screenshot = ((SelendroidDriver) driver).getScreenshotAs(OutputType.FILE);
     String nameScreenshot = UUID.randomUUID().toString() + ".png";
     String path = getPath(nameScreenshot);
     FileUtils.copyFile(screenshot, new File(path));

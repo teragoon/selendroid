@@ -165,6 +165,9 @@ public class DefaultAndroidEmulator extends AbstractDevice implements AndroidEmu
     String[] avdsOutput = StringUtils.splitByWholeSeparator(output, "---------");
     if (avdsOutput != null && avdsOutput.length > 0) {
       for (int i = 0; i < avdsOutput.length; i++) {
+        if(avdsOutput[i].contains("Name:")==false){
+          continue;
+        }
         String element = avdsOutput[i];
         String avdName = extractValue("Name: (.*?)$", element);
         String abi = extractValue("ABI: (.*?)$", element);
@@ -230,10 +233,12 @@ public class DefaultAndroidEmulator extends AbstractDevice implements AndroidEmu
     cmd.add(avdName);
     cmd.add("-ports");
     cmd.add(emulatorPort + "," + (emulatorPort + 1));
-    cmd.add("-prop");
-    cmd.add("persist.sys.language=" + locale.getLanguage());
-    cmd.add("-prop");
-    cmd.add("persist.sys.country=" + locale.getCountry());
+    if (locale != null) {
+      cmd.add("-prop");
+      cmd.add("persist.sys.language=" + locale.getLanguage());
+      cmd.add("-prop");
+      cmd.add("persist.sys.country=" + locale.getCountry());
+    }
     long start = System.currentTimeMillis();
     long timemoutEnd = start + timeout;
     try {

@@ -38,6 +38,7 @@ import java.util.logging.Logger;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.exec.CommandLine;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -48,7 +49,7 @@ public class SelendroidServerBuilder {
   private static final Logger log = Logger.getLogger(SelendroidServerBuilder.class.getName());
   public static final String SELENDROID_FINAL_NAME = "selendroid-server.apk";
   public static final String PREBUILD_SELENDROID_SERVER_PATH =
-      "/prebuild/selendroid-server-0.4-SNAPSHOT.apk";
+      "/prebuild/selendroid-server-0.4.2.apk";
   public static final String ANDROID_APPLICATION_XML_TEMPLATE = "/AndroidManifest.xml";
   public static final String ICON = "android:icon=\"@drawable/selenium_icon\"";
   private String selendroidPrebuildServerPath = null;
@@ -95,7 +96,7 @@ public class SelendroidServerBuilder {
     return signTestServer(selendroidServer, outputFile);
   }
 
-  private void deleteFileFromAppSilently(AndroidApp app, String file) {
+  private void deleteFileFromAppSilently(AndroidApp app, String file) throws AndroidSdkException {
     if (app == null) {
       throw new IllegalArgumentException("Required parameter 'app' is null.");
     }
@@ -104,13 +105,13 @@ public class SelendroidServerBuilder {
     }
     try {
       app.deleteFileFromWithinApk(file);
-    } catch (Exception e) {
+    } catch (ShellCommandException e) {
       // don't care, can happen if file does not exist
     }
   }
 
   public AndroidApp resignApp(File appFile) throws ShellCommandException, AndroidSdkException {
-    AndroidApp app =new DefaultAndroidApp(appFile);
+    AndroidApp app = new DefaultAndroidApp(appFile);
     // Delete existing certificates
     deleteFileFromAppSilently(app, "META-INF/MANIFEST.MF");
     deleteFileFromAppSilently(app, "META-INF/CERT.RSA");
@@ -118,7 +119,7 @@ public class SelendroidServerBuilder {
     deleteFileFromAppSilently(app, "META-INF/ANDROIDD.SF");
     deleteFileFromAppSilently(app, "META-INF/ANDROIDD.RSA");
 
-    
+
     File outputFile = new File(appFile.getParentFile(), "resigned-" + appFile.getName());
     return signTestServer(appFile, outputFile);
   }
@@ -127,7 +128,8 @@ public class SelendroidServerBuilder {
       ShellCommandException, AndroidSdkException {
     String targetPackageName = applicationUnderTest.getBasePackage();
     File tempdir =
-        new File(FileUtils.getTempDirectoryPath() + File.separatorChar + targetPackageName + System.currentTimeMillis());
+        new File(FileUtils.getTempDirectoryPath() + File.separatorChar + targetPackageName
+            + System.currentTimeMillis());
 
     if (!tempdir.exists()) {
       tempdir.mkdirs();
@@ -202,36 +204,49 @@ public class SelendroidServerBuilder {
 
     if (androidKeyStore.isFile() == false) {
       // create a new keystore
-      List<String> createKeyStore = Lists.newArrayList();
-      createKeyStore.add(JavaSdk.keytool());
-      createKeyStore.add("-genkey");
-      createKeyStore.add("-v");
-      createKeyStore.add("-keystore");
-      createKeyStore.add(androidKeyStore.toString());
-      createKeyStore.add("-storepass android");
-      createKeyStore.add("-alias androiddebugkey");
-      createKeyStore.add("-keypass android");
-      createKeyStore.add("-dname \"CN=Android Debug,O=Android,C=US\"");
-      createKeyStore.add("-storetype JKS");
-      createKeyStore.add("-sigalg MD5withRSA");
-      createKeyStore.add("-keyalg RSA");
-      String output = ShellCommand.exec(createKeyStore);
+      CommandLine commandline = new CommandLine(new File(JavaSdk.keytool()));
+
+      commandline.addArgument("-genkey", false);
+      commandline.addArgument("-v", false);
+      commandline.addArgument("-keystore", false);
+      commandline.addArgument(androidKeyStore.toString(), false);
+      commandline.addArgument("-storepass", false);
+      commandline.addArgument("android", false);
+      commandline.addArgument("-alias", false);
+      commandline.addArgument("androiddebugkey", false);
+      commandline.addArgument("-keypass", false);
+      commandline.addArgument("android", false);
+      commandline.addArgument("-dname", false);
+      commandline.addArgument("CN=Android Debug,O=Android,C=US", false);
+      commandline.addArgument("-storetype", false);
+      commandline.addArgument("JKS", false);
+      commandline.addArgument("-sigalg", false);
+      commandline.addArgument("MD5withRSA", false);
+      commandline.addArgument("-keyalg", false);
+      commandline.addArgument("RSA", false);
+      commandline.addArgument("-validity", false);
+      commandline.addArgument("9999", false);
+
+      String output = ShellCommand.exec(commandline, 20000);
       log.info("A new keystore has been created: " + output);
     }
 
     // Sign the jar
-    List<String> signApkCommand = Lists.newArrayList();
-    signApkCommand.add(JavaSdk.jarsigner());
-    signApkCommand.add("-sigalg MD5withRSA");
-    signApkCommand.add("-digestalg SHA1");
-    signApkCommand.add("-signedjar");
-    signApkCommand.add(outputFileName.getAbsolutePath());
-    signApkCommand.add("-storepass android");
-    signApkCommand.add("-keystore");
-    signApkCommand.add(androidKeyStore.toString());
-    signApkCommand.add(customSelendroidServer.getAbsolutePath());
-    signApkCommand.add("androiddebugkey");
-    String output = ShellCommand.exec(signApkCommand);
+    CommandLine commandline = new CommandLine(new File(JavaSdk.jarsigner()));
+
+    commandline.addArgument("-sigalg", false);
+    commandline.addArgument("MD5withRSA", false);
+    commandline.addArgument("-digestalg", false);
+    commandline.addArgument("SHA1", false);
+    commandline.addArgument("-signedjar", false);
+    commandline.addArgument(outputFileName.getAbsolutePath(), false);
+    commandline.addArgument("-storepass", false);
+    commandline.addArgument("android", false);
+    commandline.addArgument("-keystore", false);
+    commandline.addArgument(androidKeyStore.toString(), false);
+    commandline.addArgument(customSelendroidServer.getAbsolutePath(), false);
+    commandline.addArgument("androiddebugkey", false);
+    String output = ShellCommand.exec(commandline, 20000);
     if (log.isLoggable(Level.INFO)) {
       log.info("App signing output: " + output);
     }

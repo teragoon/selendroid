@@ -56,6 +56,11 @@ public class SelendroidServlet extends BaseServlet {
   public void handleRequest(HttpRequest request, HttpResponse response,
       BaseRequestHandler foundHandler) {
     BaseRequestHandler handler = null;
+    if ("/favicon.ico".equals(request.uri()) && foundHandler == null) {
+      response.status(404);
+      response.end();
+      return;
+    }
     if (foundHandler == null) {
       if (redirectHandler.isEmpty() == false) {
         // trying to find an redirect handler
@@ -94,7 +99,7 @@ public class SelendroidServlet extends BaseServlet {
       return;
     }
     if (result instanceof SelendroidResponse) {
-      handleResponse(request, response, result);
+      handleResponse(request, response, (SelendroidResponse) result);
     } else {
       UiResponse uiResponse = (UiResponse) result;
       response.header("Content-Type", "text/html");

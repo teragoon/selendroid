@@ -39,12 +39,17 @@ public class AndroidSdk {
     StringBuffer command = new StringBuffer();
     command.append("aapt");
     command.append(platformExecutableSuffixExe());
-    File platformToolsAapt = new File(platformToolsHome() + command.toString());
-    if (platformToolsAapt.exists()) {
+    File platformToolsAapt = new File(platformToolsHome(), command.toString());
+    
+    if (platformToolsAapt.isFile()) {
       return platformToolsAapt.getAbsolutePath();
     }
-    File buildToolsAapt = new File(buildToolsHome() + command.toString());
-    if (buildToolsAapt.exists()) {
+    File buildToolsAapt = new File(buildToolsHome("android-4.2.2"),command.toString());
+    if (buildToolsAapt.isFile()) {
+      return buildToolsAapt.getAbsolutePath();
+    }
+    buildToolsAapt = new File(buildToolsHome("17.0.0"),command.toString());
+    if (buildToolsAapt.isFile()) {
       return buildToolsAapt.getAbsolutePath();
     }
 
@@ -77,13 +82,13 @@ public class AndroidSdk {
     return command.toString();
   }
 
-  private static String buildToolsHome() {
+  private static String buildToolsHome(String platformFolder) {
     StringBuffer command = new StringBuffer();
     command.append(androidHome());
     command.append(File.separator);
     command.append("build-tools");
     command.append(File.separator);
-    command.append("17.0.0");
+    command.append(platformFolder);
     command.append(File.separator);
 
     return command.toString();

@@ -34,10 +34,12 @@ import io.selendroid.server.handler.GetElementDisplayed;
 import io.selendroid.server.handler.GetElementEnabled;
 import io.selendroid.server.handler.GetElementSelected;
 import io.selendroid.server.handler.GetElementSize;
+import io.selendroid.server.handler.GetElementTagName;
 import io.selendroid.server.handler.GetPageTitle;
 import io.selendroid.server.handler.GetText;
 import io.selendroid.server.handler.GetWindowHandle;
 import io.selendroid.server.handler.GetWindowHandles;
+import io.selendroid.server.handler.GoBack;
 import io.selendroid.server.handler.ListSessions;
 import io.selendroid.server.handler.LogElement;
 import io.selendroid.server.handler.LogElementTree;
@@ -56,6 +58,7 @@ import io.selendroid.server.handler.UnknownCommandHandler;
 import io.selendroid.server.handler.Up;
 import io.selendroid.server.model.SelendroidDriver;
 import io.selendroid.util.SelendroidLogger;
+
 import org.webbitserver.HttpRequest;
 import org.webbitserver.HttpResponse;
 
@@ -120,7 +123,7 @@ public class AndroidServlet extends BaseServlet {
     postHandler
         .put("/wd/hub/session/:sessionId/timeouts/async_script", UnknownCommandHandler.class);
     postHandler.put("/wd/hub/session/:sessionId/forward", UnknownCommandHandler.class);
-    postHandler.put("/wd/hub/session/:sessionId/back", UnknownCommandHandler.class);
+    postHandler.put("/wd/hub/session/:sessionId/back", GoBack.class);
     postHandler.put("/wd/hub/session/:sessionId/refresh", UnknownCommandHandler.class);
     postHandler.put("/wd/hub/session/:sessionId/execute_async", UnknownCommandHandler.class);
     getHandler.put("/wd/hub/session/:sessionId/ime/available_engines", UnknownCommandHandler.class);
@@ -146,7 +149,7 @@ public class AndroidServlet extends BaseServlet {
     deleteHandler.put("/wd/hub/session/:sessionId/cookie/:name", UnknownCommandHandler.class);
     getHandler.put("/wd/hub/session/:sessionId/element/:id", UnknownCommandHandler.class);
     postHandler.put("/wd/hub/session/:sessionId/element/active", UnknownCommandHandler.class);
-    getHandler.put("/wd/hub/session/:sessionId/element/:id/name", UnknownCommandHandler.class);
+    getHandler.put("/wd/hub/session/:sessionId/element/:id/name", GetElementTagName.class);
     getHandler.put("/wd/hub/session/:sessionId/element/:id/equals/:other",
         UnknownCommandHandler.class);
     getHandler.put("/wd/hub/session/:sessionId/element/:id/css/:propertyName",
@@ -234,6 +237,6 @@ public class AndroidServlet extends BaseServlet {
       return;
     }
 
-    handleResponse(request, response, result);
+    handleResponse(request, response, (SelendroidResponse) result);
   }
 }

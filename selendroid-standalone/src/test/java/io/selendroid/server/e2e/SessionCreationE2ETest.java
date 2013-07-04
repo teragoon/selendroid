@@ -16,7 +16,6 @@ package io.selendroid.server.e2e;
 import io.selendroid.SelendroidCapabilities;
 import io.selendroid.SelendroidDriver;
 import io.selendroid.device.DeviceTargetPlatform;
-import io.selendroid.server.model.SelendroidStandaloneDriverTests;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -30,33 +29,34 @@ import org.openqa.selenium.WebElement;
  * Test is currently only executed in manual mode
  */
 public class SessionCreationE2ETest {
+  public static final String TEST_APP_ID = "io.selendroid.testapp:0.4.1";
+
   @Ignore
   @Test()
   public void assertThatSessionCanBeExecutedOnAndroid10Emulator() throws Exception {
-    testMethod(SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID10,
-        SelendroidStandaloneDriverTests.TEST_APP_ID));
+    testMethod(SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID10, TEST_APP_ID));
   }
 
   @Ignore
   @Test
   public void assertThatSessionCanBeExecutedOnAndroid16Emulator() throws Exception {
-    testMethod(SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID16,
-        SelendroidStandaloneDriverTests.TEST_APP_ID));
+    testMethod(SelendroidCapabilities.emulator(DeviceTargetPlatform.ANDROID16, TEST_APP_ID));
   }
-
 
   @Ignore
   @Test
   public void assertThatSessionCanBeExecutedOnAndroid17Device() throws Exception {
     SelendroidCapabilities capa =
-        SelendroidCapabilities.device(DeviceTargetPlatform.ANDROID17,
-            SelendroidStandaloneDriverTests.TEST_APP_ID);
+        SelendroidCapabilities.device(DeviceTargetPlatform.ANDROID17, TEST_APP_ID);
 
     testMethod(capa);
   }
 
   private void testMethod(SelendroidCapabilities capa) throws Exception {
     WebDriver driver = new SelendroidDriver("http://localhost:5555/wd/hub", capa);
+    String activityClass = "io.selendroid.testapp." + "HomeScreenActivity";
+    driver.get("and-activity://" + activityClass);
+    driver.getCurrentUrl();
     try {
       driver.findElement(By.id("not there"));
       Assert.fail();

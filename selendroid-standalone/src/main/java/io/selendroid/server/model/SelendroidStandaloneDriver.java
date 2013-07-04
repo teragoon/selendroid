@@ -26,6 +26,7 @@ import io.selendroid.exceptions.AndroidDeviceException;
 import io.selendroid.exceptions.AndroidSdkException;
 import io.selendroid.exceptions.DeviceStoreException;
 import io.selendroid.exceptions.SelendroidException;
+import io.selendroid.exceptions.SessionNotCreatedException;
 import io.selendroid.exceptions.ShellCommandException;
 import io.selendroid.io.ShellCommand;
 import io.selendroid.server.ServerDetails;
@@ -33,12 +34,15 @@ import io.selendroid.server.model.impl.DefaultHardwareDeviceFinder;
 import io.selendroid.server.util.HttpClientUtil;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 import java.util.logging.Logger;
 
 import org.apache.http.HttpResponse;
@@ -46,7 +50,6 @@ import org.jboss.netty.handler.codec.http.HttpMethod;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openqa.selenium.SessionNotCreatedException;
 
 import com.beust.jcommander.internal.Lists;
 
@@ -123,40 +126,74 @@ public class SelendroidStandaloneDriver implements ServerDetails {
 
   /* package */void initAndroidDevices() throws AndroidDeviceException {
     deviceStore = new DeviceStore();
-    //not working in windows
-//    try {
-//      resetAdb();
-//    } catch (ShellCommandException e) {
-//      throw new AndroidDeviceException("An error occured while restarting adb.", e);
-//    }
+    try {
+      if (serverConfiguration.isRestartAdb()) {
+        resetAdb();
+      }
+    } catch (ShellCommandException e) {
+      throw new AndroidDeviceException("An error occured while restarting adb.", e);
+    }
     List<AndroidEmulator> emulators = DefaultAndroidEmulator.listAvailableAvds();
     deviceStore.addEmulators(emulators);
+
     List<AndroidDevice> devices = androidDeviceFinder.findConnectedDevices();
     deviceStore.addDevices(devices);
+
+    if (deviceStore.getDevices().isEmpty()) {
+      SelendroidException e =
+          new SelendroidException(
+              "No android virtual devices were found. Please start the android tool and create emulators.");
+      log.severe("Error: " + e);
+      throw e;
+    }
   }
 
   private void resetAdb() throws ShellCommandException {
     ShellCommand.exec(Arrays.asList(new String[] {AndroidSdk.adb(), "kill-server"}));
-    ShellCommand.exec(Arrays.asList(new String[] {AndroidSdk.adb(), "start-server"}));
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {}
   }
 
   @Override
   public String getServerVersion() {
-    String version = "dev";
-    // TODO ddary read version number from jar
-    return version;
+
+    Class clazz = SelendroidStandaloneDriver.class;
+    String className = clazz.getSimpleName() + ".class";
+    String classPath = clazz.getResource(className).toString();
+    if (!classPath.startsWith("jar")) {
+      // Class not from JAR
+      return "dev";
+    }
+    String manifestPath =
+        classPath.substring(0, classPath.lastIndexOf("!") + 1) + "/META-INF/MANIFEST.MF";
+    Manifest manifest = null;
+    try {
+      manifest = new Manifest(new URL(manifestPath).openStream());
+    } catch (Exception e) {
+      return "";
+    }
+    Attributes attr = manifest.getMainAttributes();
+    String value = attr.getValue("version");
+    return value;
   }
 
   @Override
   public String getCpuArch() {
-    // TODO Auto-generated method stub
-    return null;
+    String arch = System.getProperty("os.arch");
+    return arch;
   }
 
   @Override
   public String getOsVersion() {
-    // TODO Auto-generated method stub
-    return null;
+    String os = System.getProperty("os.version");
+    return os;
+  }
+
+  @Override
+  public String getOsName() {
+    String os = System.getProperty("os.name");
+    return os;
   }
 
   public String createNewTestSession(JSONObject caps) throws AndroidSdkException, JSONException {
@@ -286,6 +323,9 @@ public class SelendroidStandaloneDriver implements ServerDetails {
   }
 
   private Locale parseLocale(SelendroidCapabilities capa) {
+    if (capa.getLocale() == null) {
+      return null;
+    }
     String[] localeStr = capa.getLocale().split("_");
     Locale locale = new Locale(localeStr[0], localeStr[1]);
 
@@ -295,11 +335,6 @@ public class SelendroidStandaloneDriver implements ServerDetails {
   /* package */AndroidDevice getAndroidDevice(SelendroidCapabilities caps)
       throws AndroidDeviceException {
     AndroidDevice device = null;
-    Boolean emulator = caps.getEmulator();
-    if (emulator == null) {
-      emulator = Boolean.TRUE;
-      log.warning("'emualtor' capability in desired capabilities. Assuming an emulator was meant.");
-    }
 
     try {
       device = deviceStore.findAndroidDevice(caps);
